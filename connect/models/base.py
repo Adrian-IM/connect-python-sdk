@@ -33,6 +33,9 @@ class BaseModel(object):
         dump = json.dumps(self, default=lambda o: getattr(o, '__dict__', str(o)))
         return json.loads(dump)
 
+    def __str__(self):
+        return str(self.json)
+
     @classmethod
     def deserialize(cls, json_str):
         """ Deserialize a string containing JSON data into a model.
@@ -58,7 +61,7 @@ class BaseModel(object):
             raise TypeError(
                 'Invalid structure for initialization of `{type}`. \n'
                 'Error: {error}. \nJSON data: {data}'
-                .format(
+                    .format(
                     type=cls.__name__,
                     error=error,
                     data=json_data),
