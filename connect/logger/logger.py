@@ -9,6 +9,8 @@ import copy
 import logging
 import os
 from logging.config import dictConfig
+from connect.config import Config
+
 
 with open(os.path.join(os.path.dirname(__file__), 'config.json')) as config_file:
     config = json.load(config_file)
@@ -54,14 +56,15 @@ def unpack_string_responses(value, hidden_fields):
     return None
 
 
-def function_log(config=None, custom_logger=None):
+def function_log(custom_logger=None):
+    configuration = Config.get_instance()
     if not custom_logger:
         custom_logger = logging.getLogger()
         sformat = " %(levelname)-6s; %(asctime)s; %(name)-6s; %(module)s:%(funcName)s:line" \
                   "-%(lineno)d: %(message)s"
         for handler in custom_logger.handlers:
             handler.setFormatter(logging.Formatter(sformat, "%I:%M:%S"))
-    hidden_fields = config.hidden_fields if config else []
+    hidden_fields = configuration.hidden_fields if configuration else []
 
     # noinspection PyUnusedLocal
     def decorator(func, **kwargs):

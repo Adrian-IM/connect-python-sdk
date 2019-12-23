@@ -60,21 +60,21 @@ class ApiClient(object):
             lambda a, b: compat.urljoin(a + ('' if a.endswith('/') else '/'), b) if b else a,
             args)
 
-    @function_log(config=Config.get_instance())
+    @function_log()
     def get(self, path='', **kwargs):
         # type: (str, Any) -> Tuple[str, int]
         kwargs = self._fix_request_kwargs(path, kwargs)
         response = requests.get(**kwargs)
         return self._check_and_pack_response(response)
 
-    @function_log(config=Config.get_instance())
+    @function_log()
     def post(self, path='', **kwargs):
         # type: (str, Any) -> Tuple[str, int]
         kwargs = self._fix_request_kwargs(path, kwargs)
         response = requests.post(**kwargs)
         return self._check_and_pack_response(response)
 
-    @function_log(config=Config.get_instance())
+    @function_log()
     def put(self, path='', **kwargs):
         # type: (str, Any) -> Tuple[str, int]
         kwargs = self._fix_request_kwargs(path, kwargs)

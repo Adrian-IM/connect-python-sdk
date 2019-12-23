@@ -10,7 +10,7 @@ test_dictionary_1 = {
 }
 
 
-@function_log(config=Config.get_instance())
+@function_log()
 def hidden_logger(value1, value2):
     return value1, value2
 
